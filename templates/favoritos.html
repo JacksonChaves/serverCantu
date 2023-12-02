@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<main>
+
+    <ul class="page-nav">
+        <li>
+            <a class="btn btn-outline-success" 
+               href="{{ url_for('produto_new') }}">Cadastro</a>
+        </li>
+    </ul>
+<form class="crud p2" action="/produto/busca" method="POST">
+    <input type="text" value="" name="busca" placeholder="Digite aqui sua busca"> 
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+    <div>    
+    <span>{{tamanho}} </span>
+    </div>  
+
+    <h2>Lista produtos</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preco</th>
+                <th>Categoria</th>
+                <th class="actions">⌘</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{produto.nome}}</td>
+                <td>{{produto.preco}}</td>
+                <td>{{produto.marca}}</td>
+
+                <td class="actions">
+                    <a type="button" 
+                    href="{{ url_for('favoritos_delete', id=produto.favorito) }}"> 
+                    <i onclick="myFunction(this)" class="bi bi-x-circle"> </i> </a></td> 
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}

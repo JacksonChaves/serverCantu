@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+<main>
+
+    <ul class="page-nav">
+        <li>
+            <a class="btn btn-outline-success" 
+               href="{{ url_for('produto_new') }}">Cadastro</a>
+        </li>
+    </ul>
+
+    <form class="crud p2" action="/produto/busca" method="POST">
+        <input type="text" value="" name="busca" placeholder="O que está procurando?"> 
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div>    
+        <span>{{tamanho}} </span>
+    </div>  
+
+    <h2>Lista produtos</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preco</th>
+                <th>Categoria</th>
+                <th class="actions">⌘</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{produto.id}}</td>
+                <td>
+                    <a title="editar" 
+                    href="{{ url_for('produto_edit', id=produto.id ) }}">
+                        {{produto.nome}}
+                    </a>
+                </td>
+                <td>{{produto.preco}}</td>
+                <td>{{produto.marca}}</td>
+
+                <td>
+                    <a type="button" 
+                    href="{{ url_for('favoritos_save', id=produto.id) }}"> 
+                    <i onclick="myFunction(this)" class="bi bi-circle"> </i> </a></td>                
+
+                <td class="actions">
+                    <a title="editar" class="btn btn-warning" href="{{ url_for('produto_edit', id=produto.id ) }}">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a title="deletar" class="btn btn-danger" 
+                    href="{{ url_for('produto_delete', id=produto.id) }}">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                    
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}
